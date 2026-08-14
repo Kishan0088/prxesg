@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kishan0088.github.io/prxesg/sitemap.xml

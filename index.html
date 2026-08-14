@@ -1,1843 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PRXESG — The ESG Communication Intelligence Platform</title>
-<meta name="description" content="PRXESG is the first integrated ESG communication intelligence platform. Track what your company says, what your peers say, and what the world says back — backed by a specialist services team." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --ink: #0E0D0A;
-  --ash: #1C1A16;
-  --char: #2A2620;
-  --rule: #322D26;
-  --cream: #F4EFE6;
-  --paper: #FAF7F1;
-  --smoke: #B5AFA1;
-  --mist: #7A746A;
-  --claret: #7A2424;
-  --claret-2: #A23838;
-  --gold: #B8924C;
-  --gold-2: #D4AC68;
-  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --mono: 'JetBrains Mono', 'Courier New', monospace;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans);
-  background: var(--ink);
-  color: var(--cream);
-  line-height: 1.55;
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
-
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-
-::selection { background: var(--claret); color: var(--cream); }
-
-/* ============ Top Bar ============ */
-.topbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 18px 40px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(14, 13, 10, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.4s ease;
-}
-.topbar.scrolled { border-bottom-color: var(--rule); }
-.logo {
-  font-family: var(--serif);
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  display: flex; align-items: center; gap: 2px;
-}
-.logo .x { color: var(--claret-2); font-style: italic; }
-.logo .esg { font-family: var(--mono); font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; margin-left: 6px; align-self: center; color: var(--smoke); font-weight: 400; }
-.nav {
-  display: flex; gap: 36px;
-  font-size: 14px;
-  color: var(--smoke);
-}
-.nav a { transition: color 0.2s; }
-.nav a:hover { color: var(--cream); }
-.cta-btn {
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  padding: 10px 18px;
-  background: var(--cream);
-  color: var(--ink);
-  border-radius: 2px;
-  transition: background 0.2s, transform 0.2s;
-  font-weight: 500;
-}
-.cta-btn:hover { background: var(--gold-2); }
-.cta-btn.ghost { background: transparent; color: var(--cream); border: 1px solid var(--rule); }
-.cta-btn.ghost:hover { background: var(--cream); color: var(--ink); border-color: var(--cream); }
-
-@media (max-width: 880px) {
-  .topbar { padding: 14px 20px; }
-  .nav { display: none; }
-}
-
-/* ============ Hero ============ */
-.hero {
-  min-height: 100vh;
-  padding: 180px 40px 120px;
-  display: flex; flex-direction: column; justify-content: center;
-  position: relative;
-  background: var(--ink);
-  background-image:
-    radial-gradient(ellipse at 80% 20%, rgba(122, 36, 36, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 20% 80%, rgba(184, 146, 76, 0.08) 0%, transparent 50%);
-}
-.hero-grid-overlay {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(244, 239, 230, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 239, 230, 0.025) 1px, transparent 1px);
-  background-size: 80px 80px;
-  pointer-events: none;
-}
-.hero-inner {
-  max-width: 1280px; margin: 0 auto; width: 100%;
-  position: relative; z-index: 2;
-}
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold-2);
-  margin-bottom: 40px;
-  padding: 6px 14px;
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  background: rgba(184, 146, 76, 0.04);
-}
-.eyebrow .pulse {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--gold-2);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(212, 172, 104, 0.6); }
-  50% { opacity: 0.6; box-shadow: 0 0 0 8px rgba(212, 172, 104, 0); }
-}
-.hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(48px, 7vw, 96px);
-  font-weight: 400;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  margin-bottom: 36px;
-  max-width: 1100px;
-}
-.hero h1 em {
-  font-style: italic;
-  font-weight: 300;
-  color: var(--gold-2);
-}
-.hero h1 .underline {
-  position: relative;
-  display: inline-block;
-}
-.hero h1 .underline::after {
-  content: '';
-  position: absolute; left: 0; right: 0; bottom: 0.05em;
-  height: 2px;
-  background: var(--claret-2);
-}
-.hero-sub {
-  font-size: clamp(17px, 1.4vw, 21px);
-  line-height: 1.55;
-  color: var(--smoke);
-  max-width: 720px;
-  margin-bottom: 56px;
-  font-weight: 400;
-}
-.hero-actions {
-  display: flex; gap: 16px; flex-wrap: wrap;
-  margin-bottom: 80px;
-}
-.hero-actions .cta-btn {
-  font-size: 14px;
-  padding: 14px 26px;
-}
-.hero-actions .cta-btn.primary {
-  background: var(--cream);
-  color: var(--ink);
-}
-.hero-actions .cta-btn.secondary {
-  background: transparent;
-  border: 1px solid var(--rule);
-  color: var(--cream);
-}
-.hero-actions .cta-btn.secondary:hover {
-  border-color: var(--cream);
-  background: rgba(244, 239, 230, 0.04);
-}
-.hero-meta {
-  display: flex; gap: 60px; flex-wrap: wrap;
-  padding-top: 40px;
-  border-top: 1px solid var(--rule);
-  max-width: 900px;
-}
-.hero-meta div {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--smoke);
-}
-.hero-meta div span {
-  display: block;
-  font-family: var(--serif);
-  font-size: 24px;
-  letter-spacing: -0.01em;
-  color: var(--cream);
-  text-transform: none;
-  margin-top: 6px;
-  font-weight: 400;
-}
-
-@media (max-width: 720px) {
-  .hero { padding: 140px 20px 80px; }
-  .hero-meta { gap: 32px; }
-}
-
-/* ============ Section base ============ */
-section { position: relative; }
-.section {
-  padding: 140px 40px;
-  position: relative;
-}
-.section-inner {
-  max-width: 1280px; margin: 0 auto;
-}
-.section.cream { background: var(--cream); color: var(--ink); }
-.section.cream .smoke { color: var(--mist); }
-.section.cream .rule { border-color: rgba(14, 13, 10, 0.12); }
-
-.section-label {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--mist);
-  margin-bottom: 28px;
-  display: flex; align-items: center; gap: 14px;
-}
-.section-label::before {
-  content: '';
-  width: 24px; height: 1px;
-  background: var(--mist);
-}
-.section.cream .section-label { color: var(--mist); }
-
-.section h2 {
-  font-family: var(--serif);
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  margin-bottom: 32px;
-  max-width: 900px;
-}
-.section h2 em { font-style: italic; color: var(--claret-2); font-weight: 300; }
-.section.cream h2 em { color: var(--claret); }
-.section-lede {
-  font-family: var(--serif);
-  font-size: clamp(19px, 1.6vw, 24px);
-  line-height: 1.55;
-  color: var(--smoke);
-  max-width: 720px;
-  margin-bottom: 72px;
-  font-weight: 300;
-}
-.section.cream .section-lede { color: var(--char); }
-
-/* ============ Problem section ============ */
-.problem-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--rule);
-  margin-top: 40px;
-}
-.problem-cell {
-  background: var(--ink);
-  padding: 48px 36px;
-  position: relative;
-  transition: background 0.3s;
-}
-.problem-cell:hover { background: var(--ash); }
-.problem-num {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  color: var(--claret-2);
-  margin-bottom: 20px;
-}
-.problem-cell h3 {
-  font-family: var(--serif);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  margin-bottom: 20px;
-  color: var(--cream);
-}
-.problem-cell p {
-  color: var(--smoke);
-  font-size: 15px;
-  line-height: 1.65;
-}
-.problem-stat {
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--rule);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--mist);
-}
-
-@media (max-width: 900px) {
-  .problem-grid { grid-template-columns: 1fr; }
-}
-
-/* ============ Why Now — timeline ============ */
-.why-now {
-  background: var(--ash);
-}
-.timeline {
-  position: relative;
-  margin-top: 60px;
-  padding-left: 40px;
-}
-.timeline::before {
-  content: '';
-  position: absolute; left: 6px; top: 8px; bottom: 8px;
-  width: 1px; background: var(--rule);
-}
-.timeline-item {
-  position: relative;
-  padding-bottom: 48px;
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 40px;
-  align-items: start;
-}
-.timeline-item::before {
-  content: '';
-  position: absolute; left: -40px; top: 8px;
-  width: 13px; height: 13px;
-  border-radius: 50%; background: var(--ink);
-  border: 2px solid var(--gold-2);
-}
-.timeline-item:hover::before { background: var(--gold-2); }
-.timeline-when {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold-2);
-  padding-top: 4px;
-}
-.timeline-when small {
-  display: block;
-  color: var(--mist);
-  font-size: 11px;
-  margin-top: 4px;
-  letter-spacing: 0.1em;
-}
-.timeline-what h4 {
-  font-family: var(--serif);
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.3;
-  margin-bottom: 8px;
-  color: var(--cream);
-}
-.timeline-what p {
-  color: var(--smoke);
-  font-size: 15px;
-  line-height: 1.65;
-  max-width: 600px;
-}
-@media (max-width: 720px) {
-  .timeline-item { grid-template-columns: 1fr; gap: 8px; }
-}
-
-/* ============ Insight / Positioning ============ */
-.positioning {
-  padding-top: 100px;
-}
-.positioning-diagram {
-  margin: 80px auto;
-  max-width: 880px;
-  position: relative;
-}
-
-/* ============ Platform section ============ */
-.platform {
-  background: var(--cream);
-  color: var(--ink);
-  padding: 140px 40px;
-}
-.platform-layers {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1px;
-  background: rgba(14, 13, 10, 0.12);
-  margin-top: 80px;
-  border: 1px solid rgba(14, 13, 10, 0.12);
-}
-.platform-layer {
-  background: var(--paper);
-  padding: 64px 56px;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 64px;
-  align-items: center;
-}
-.platform-layer:nth-child(even) {
-  background: var(--cream);
-}
-.layer-tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--claret);
-  margin-bottom: 20px;
-  display: flex; align-items: center; gap: 12px;
-}
-.layer-num {
-  font-family: var(--serif);
-  font-size: 13px;
-  border: 1px solid var(--claret);
-  border-radius: 50%;
-  width: 26px; height: 26px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--claret);
-}
-.platform-layer h3 {
-  font-family: var(--serif);
-  font-size: clamp(28px, 3vw, 40px);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin-bottom: 24px;
-  color: var(--ink);
-}
-.platform-layer h3 em { font-style: italic; color: var(--claret); }
-.platform-layer p.lede {
-  font-family: var(--serif);
-  font-size: 18px;
-  line-height: 1.6;
-  color: var(--char);
-  margin-bottom: 28px;
-  font-weight: 400;
-}
-.feature-list { list-style: none; }
-.feature-list li {
-  padding: 10px 0;
-  font-size: 14px;
-  color: var(--char);
-  border-bottom: 1px solid rgba(14, 13, 10, 0.08);
-  display: flex; align-items: start; gap: 12px;
-  line-height: 1.55;
-}
-.feature-list li:last-child { border-bottom: none; }
-.feature-list li::before {
-  content: '→';
-  color: var(--claret);
-  font-family: var(--serif);
-  flex-shrink: 0;
-}
-.layer-visual {
-  background: var(--ink);
-  padding: 24px;
-  border-radius: 4px;
-  position: relative;
-  min-height: 320px;
-  overflow: hidden;
-}
-@media (max-width: 900px) {
-  .platform-layer { grid-template-columns: 1fr; padding: 48px 28px; gap: 40px; }
-}
-
-/* ============ Mock dashboard styles ============ */
-.mock {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--cream);
-}
-.mock-head {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 16px;
-}
-.mock-dot { width: 7px; height: 7px; border-radius: 50%; }
-.mock-dots { display: flex; gap: 4px; }
-.mock-title { color: var(--smoke); letter-spacing: 0.1em; font-size: 10px; text-transform: uppercase; }
-.mock-row {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--rule);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 12px;
-  align-items: center;
-}
-.mock-row:last-child { border-bottom: none; }
-.mock-tag {
-  font-size: 9px;
-  padding: 2px 6px;
-  border-radius: 2px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.tag-ok { background: rgba(184, 146, 76, 0.15); color: var(--gold-2); }
-.tag-risk { background: rgba(122, 36, 36, 0.25); color: #E89393; }
-.tag-warn { background: rgba(184, 146, 76, 0.2); color: var(--gold-2); }
-.tag-flat { background: rgba(181, 175, 161, 0.15); color: var(--smoke); }
-.mock-claim {
-  font-family: var(--sans);
-  font-size: 12px;
-  color: var(--cream);
-  font-weight: 400;
-}
-.mock-meta {
-  font-size: 10px;
-  color: var(--mist);
-  margin-top: 3px;
-}
-.mock-pct { font-family: var(--mono); font-size: 11px; color: var(--gold-2); }
-.mock-bars { display: flex; align-items: end; gap: 4px; height: 60px; padding: 12px 0; }
-.mock-bar { flex: 1; background: var(--rule); border-radius: 1px; position: relative; }
-.mock-bar.high { background: var(--claret-2); }
-.mock-bar.mid { background: var(--gold); }
-.mock-bar.low { background: var(--rule); }
-.mock-axis {
-  display: flex; justify-content: space-between;
-  font-size: 9px; color: var(--mist); padding-top: 8px;
-  border-top: 1px solid var(--rule);
-}
-
-/* ============ Integration / Loop ============ */
-.loop {
-  background: var(--ink);
-  padding: 160px 40px;
-}
-.loop-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-  margin-top: 80px;
-}
-.loop-text h3 {
-  font-family: var(--serif);
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 1.2;
-  margin-bottom: 20px;
-  color: var(--cream);
-}
-.loop-text p {
-  font-size: 16px;
-  color: var(--smoke);
-  line-height: 1.7;
-  margin-bottom: 16px;
-}
-.loop-text .pull {
-  font-family: var(--serif);
-  font-size: 22px;
-  line-height: 1.4;
-  color: var(--gold-2);
-  font-style: italic;
-  margin-top: 32px;
-  padding-left: 24px;
-  border-left: 2px solid var(--claret);
-}
-@media (max-width: 900px) {
-  .loop-grid { grid-template-columns: 1fr; gap: 48px; }
-}
-
-/* ============ Services ============ */
-.services {
-  background: var(--cream);
-  color: var(--ink);
-  padding: 140px 40px;
-}
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: rgba(14, 13, 10, 0.12);
-  margin-top: 60px;
-  border: 1px solid rgba(14, 13, 10, 0.12);
-}
-.service-card {
-  background: var(--paper);
-  padding: 40px 32px;
-  min-height: 340px;
-  display: flex; flex-direction: column;
-  transition: background 0.3s;
-  position: relative;
-}
-.service-card:hover { background: #fff; }
-.service-card .num {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  color: var(--claret);
-  margin-bottom: 24px;
-}
-.service-card h4 {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 1.2;
-  margin-bottom: 16px;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-}
-.service-card p {
-  font-size: 14px;
-  color: var(--char);
-  line-height: 1.6;
-  flex-grow: 1;
-}
-.service-card .price {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(14, 13, 10, 0.12);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mist);
-}
-.service-card .price span {
-  color: var(--claret);
-  font-family: var(--sans);
-  text-transform: none;
-  font-size: 13px;
-  letter-spacing: 0;
-}
-@media (max-width: 900px) {
-  .services-grid { grid-template-columns: 1fr; }
-}
-
-/* ============ Frameworks ============ */
-.frameworks {
-  background: var(--ink);
-  padding: 140px 40px;
-  position: relative;
-}
-.frameworks::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(244, 239, 230, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-}
-.framework-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  margin-top: 60px;
-  position: relative;
-}
-.framework-cell {
-  background: var(--ink);
-  padding: 28px 24px;
-  transition: background 0.3s;
-}
-.framework-cell:hover { background: var(--ash); }
-.framework-cell .code {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold-2);
-  margin-bottom: 8px;
-}
-.framework-cell .name {
-  font-family: var(--serif);
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--cream);
-  margin-bottom: 6px;
-  letter-spacing: -0.01em;
-}
-.framework-cell .geo {
-  font-size: 12px;
-  color: var(--mist);
-}
-
-/* ============ Industries ============ */
-.industries {
-  background: var(--ash);
-  padding: 140px 40px;
-}
-.industry-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  margin-top: 60px;
-}
-.industry-card {
-  padding: 40px;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  background: var(--ink);
-  transition: border-color 0.3s, transform 0.3s;
-}
-.industry-card:hover {
-  border-color: var(--gold);
-  transform: translateY(-2px);
-}
-.industry-card .tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--claret-2);
-  margin-bottom: 16px;
-}
-.industry-card h4 {
-  font-family: var(--serif);
-  font-size: 26px;
-  font-weight: 400;
-  line-height: 1.2;
-  margin-bottom: 14px;
-  color: var(--cream);
-}
-.industry-card p {
-  font-size: 14px;
-  color: var(--smoke);
-  line-height: 1.7;
-}
-.industry-stat {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--rule);
-  display: flex; align-items: baseline; gap: 12px;
-}
-.industry-stat .n {
-  font-family: var(--serif);
-  font-size: 28px;
-  font-weight: 400;
-  color: var(--gold-2);
-  letter-spacing: -0.02em;
-}
-.industry-stat .l {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mist);
-}
-@media (max-width: 720px) {
-  .industry-grid { grid-template-columns: 1fr; }
-}
-
-/* ============ Insights / Newsletter ============ */
-.insights {
-  background: var(--cream);
-  color: var(--ink);
-  padding: 140px 40px;
-}
-.insights-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 80px;
-  margin-top: 60px;
-  align-items: start;
-}
-.insights-list { list-style: none; }
-.insights-list li {
-  padding: 24px 0;
-  border-bottom: 1px solid rgba(14, 13, 10, 0.12);
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 24px;
-  align-items: start;
-  cursor: pointer;
-  transition: padding-left 0.3s;
-}
-.insights-list li:hover { padding-left: 8px; }
-.insights-list li:last-child { border-bottom: none; }
-.insights-list .date {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mist);
-  padding-top: 4px;
-}
-.insights-list .ttl {
-  font-family: var(--serif);
-  font-size: 19px;
-  line-height: 1.35;
-  color: var(--ink);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-}
-.subscribe-card {
-  background: var(--ink);
-  color: var(--cream);
-  padding: 48px 40px;
-  border-radius: 4px;
-  position: sticky; top: 100px;
-}
-.subscribe-card h4 {
-  font-family: var(--serif);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.2;
-  margin-bottom: 16px;
-  letter-spacing: -0.015em;
-}
-.subscribe-card p {
-  font-size: 14px;
-  color: var(--smoke);
-  line-height: 1.65;
-  margin-bottom: 28px;
-}
-.sub-form { display: flex; flex-direction: column; gap: 12px; }
-.sub-form input {
-  background: transparent;
-  border: 1px solid var(--rule);
-  padding: 14px 16px;
-  color: var(--cream);
-  font-family: var(--sans);
-  font-size: 14px;
-  border-radius: 2px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.sub-form input:focus { border-color: var(--gold-2); }
-.sub-form input::placeholder { color: var(--mist); }
-.sub-form button {
-  background: var(--cream);
-  color: var(--ink);
-  padding: 14px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  border-radius: 2px;
-  transition: background 0.2s;
-}
-.sub-form button:hover { background: var(--gold-2); }
-.sub-meta {
-  margin-top: 20px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mist);
-}
-@media (max-width: 900px) {
-  .insights-grid { grid-template-columns: 1fr; gap: 48px; }
-  .subscribe-card { position: static; }
-}
-
-/* ============ About / Team ============ */
-.about {
-  background: var(--ink);
-  padding: 140px 40px;
-}
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
-  margin-top: 60px;
-}
-.about-text p {
-  font-size: 17px;
-  line-height: 1.7;
-  color: var(--smoke);
-  margin-bottom: 24px;
-}
-.about-text p:first-child {
-  font-family: var(--serif);
-  font-size: 22px;
-  color: var(--cream);
-  font-weight: 300;
-  line-height: 1.5;
-}
-.about-text strong {
-  color: var(--cream);
-  font-weight: 500;
-}
-.principle-list {
-  list-style: none;
-  border-top: 1px solid var(--rule);
-}
-.principle-list li {
-  padding: 28px 0;
-  border-bottom: 1px solid var(--rule);
-  display: grid;
-  grid-template-columns: 30px 1fr;
-  gap: 20px;
-  align-items: start;
-}
-.principle-list .n {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--gold-2);
-  letter-spacing: 0.1em;
-  padding-top: 6px;
-}
-.principle-list h5 {
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 400;
-  line-height: 1.3;
-  color: var(--cream);
-  margin-bottom: 8px;
-}
-.principle-list p {
-  font-size: 14px;
-  color: var(--smoke);
-  line-height: 1.65;
-}
-@media (max-width: 900px) {
-  .about-grid { grid-template-columns: 1fr; gap: 48px; }
-}
-
-/* ============ CTA ============ */
-.cta-section {
-  background: var(--ink);
-  padding: 140px 40px;
-  text-align: center;
-  position: relative;
-  border-top: 1px solid var(--rule);
-}
-.cta-section::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: radial-gradient(ellipse at center, rgba(122, 36, 36, 0.12) 0%, transparent 60%);
-  pointer-events: none;
-}
-.cta-inner { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
-.cta-section .eyebrow { margin: 0 auto 32px; }
-.cta-section h2 {
-  font-family: var(--serif);
-  font-size: clamp(40px, 5vw, 64px);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  margin-bottom: 24px;
-}
-.cta-section h2 em { font-style: italic; color: var(--gold-2); font-weight: 300; }
-.cta-section p {
-  font-family: var(--serif);
-  font-size: 19px;
-  line-height: 1.6;
-  color: var(--smoke);
-  margin-bottom: 48px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  font-weight: 300;
-}
-.cta-section .actions {
-  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-}
-.cta-section .cta-btn { padding: 16px 32px; font-size: 14px; }
-
-/* ============ Footer ============ */
-footer {
-  background: #0A0907;
-  padding: 80px 40px 40px;
-  border-top: 1px solid var(--rule);
-}
-.footer-inner { max-width: 1280px; margin: 0 auto; }
-.footer-top {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 48px;
-  padding-bottom: 60px;
-  border-bottom: 1px solid var(--rule);
-}
-.footer-brand .logo { margin-bottom: 16px; }
-.footer-brand p {
-  color: var(--smoke);
-  font-size: 14px;
-  line-height: 1.7;
-  max-width: 280px;
-}
-.footer-col h6 {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold-2);
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-.footer-col ul { list-style: none; }
-.footer-col li { padding: 6px 0; }
-.footer-col a {
-  color: var(--smoke);
-  font-size: 14px;
-  transition: color 0.2s;
-}
-.footer-col a:hover { color: var(--cream); }
-.footer-bottom {
-  padding-top: 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.footer-bottom .copy {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--mist);
-}
-.footer-bottom .legal {
-  display: flex; gap: 24px;
-  font-size: 12px;
-  color: var(--mist);
-}
-.footer-bottom .legal a:hover { color: var(--cream); }
-@media (max-width: 720px) {
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
-}
-
-/* ============ Reveal animations ============ */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.in { opacity: 1; transform: none; }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PR×ESG — ESG Risk & Communication Intelligence</title>
+<meta name="description" content="Real-time intelligence that turns an enterprise's weeks-long ESG risk response into minutes.">
+<link rel="canonical" href="https://kishan0088.github.io/prxesg/">
+<meta name="theme-color" content="#141311">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PR×ESG">
+<meta property="og:url" content="https://kishan0088.github.io/prxesg/">
+<meta property="og:title" content="PR×ESG — ESG Risk &amp; Communication Intelligence">
+<meta property="og:description" content="Real-time intelligence that turns an enterprise's weeks-long ESG risk response into minutes.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PR×ESG — ESG Risk &amp; Communication Intelligence">
+<meta name="twitter:description" content="Real-time intelligence that turns an enterprise's weeks-long ESG risk response into minutes.">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add("has-js");</script>
 </head>
 <body>
 
-<header class="topbar" id="topbar">
-  <a href="#top" class="logo">prx<span class="x">×</span>esg<span class="esg">intelligence</span></a>
-  <nav class="nav">
-    <a href="#platform">Platform</a>
-    <a href="#services">Services</a>
-    <a href="#frameworks">Frameworks</a>
-    <a href="#industries">Industries</a>
-    <a href="#insights">Insights</a>
-    <a href="#about">About</a>
-  </nav>
-  <a href="#demo" class="cta-btn">Book a demo</a>
-</header>
+<div class="progress"></div>
+<div class="bg-mesh"><span></span><span></span><span></span></div>
+<div class="grain"></div>
 
-<section class="hero" id="top">
-  <div class="hero-grid-overlay"></div>
-  <div class="hero-inner">
-    <div class="eyebrow"><span class="pulse"></span>The ESG communication intelligence platform</div>
-    <h1>
-      What you say. What your <em>peers</em> say.<br/>
-      What the world is <span class="underline">saying back</span>.
-    </h1>
-    <p class="hero-sub">
-      PRXESG is the first integrated platform built for the people whose job is to make sure your sustainability story holds up — backed by a specialist services team that audits, designs, and defends ESG communication across every stakeholder.
-    </p>
-    <div class="hero-actions">
-      <a href="#demo" class="cta-btn primary">Book a 30-minute demo</a>
-      <a href="#platform" class="cta-btn secondary">See the platform →</a>
-    </div>
-    <div class="hero-meta">
-      <div>Built for<span>CSOs · Heads of Comms · IR · General Counsel</span></div>
-      <div>Active across<span>India · UAE · Singapore · EU exports</span></div>
-      <div>Aligned with<span>BRSR · CSRD · IFRS S1/S2 · CBAM · Green Claims</span></div>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav__inner">
+    <a href="index.html" class="brand">PR<span class="x">×</span>ESG</a>
+    <button class="nav__toggle" aria-label="Menu">☰</button>
+    <div class="nav__links">
+      <a href="index.html" class="active">Home</a>
+      <a href="problem.html">Problem</a>
+      <a href="solution.html">Solution</a>
+      <a href="impact.html">Impact</a>
+      <a href="impact.html#cta" class="nav__cta">Get in the loop</a>
     </div>
   </div>
-</section>
+</nav>
 
-<section class="section">
-  <div class="section-inner">
-    <div class="section-label">01 — The problem</div>
-    <h2 class="reveal">ESG communication is broken<br/>at <em>three layers</em> at once.</h2>
-    <p class="section-lede reveal reveal-delay-1">
-      Most companies are either invisible — under-communicating real climate work — or exposed — over-claiming and getting caught. Both destroy stakeholder trust. The root cause is the same: there is no infrastructure for ESG communication.
-    </p>
-
-    <div class="problem-grid reveal reveal-delay-2">
-      <div class="problem-cell">
-        <div class="problem-num">Layer 01 / Internal</div>
-        <h3>Your own claims contradict each other.</h3>
-        <p>The annual report says one number. LinkedIn says another. The CEO interview says a third. Sales decks reference a fourth. No team is mapping these back to the data — until a regulator, buyer, or NGO does it for you.</p>
-        <div class="problem-stat">Average enterprise has 200+ unreconciled public ESG claims</div>
-      </div>
-      <div class="problem-cell">
-        <div class="problem-num">Layer 02 / Peers</div>
-        <h3>Competitors are repositioning, quarterly.</h3>
-        <p>Peer sustainability narratives shift continuously. New commitments, new framings, new claims, new silences. Most companies discover the shift six months late — usually through a buyer questionnaire or an investor's offhand comment.</p>
-        <div class="problem-stat">Most CSOs review peers once a year. Peers change every quarter.</div>
-      </div>
-      <div class="problem-cell">
-        <div class="problem-num">Layer 03 / External</div>
-        <h3>The world is talking. You're not listening.</h3>
-        <p>NGOs, regulators, social media, trade press, activist investors. ESG-material coverage about your company is being read by your investors and buyers — weeks before it reaches your sustainability team's inbox.</p>
-        <div class="problem-stat">Stakeholders find ESG signals 3–8 weeks before internal teams do</div>
+<!-- HERO -->
+<header class="hero hero--split">
+  <div class="wrap">
+    <div class="hero__copy">
+      <span class="livechip fade"><span class="dot"></span>Live ESG risk &amp; communication intelligence</span>
+      <h1 class="fade">We get companies <span class="gold-text">inside the loop</span> — before a contradiction becomes a crisis.</h1>
+      <p class="lead fade">Real-time intelligence that turns an enterprise's weeks-long ESG risk response into minutes — across regulatory, reputational, climate, and supply-chain exposure.</p>
+      <div class="btn-row fade">
+        <a href="solution.html" class="btn btn--primary">See how it works
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="problem.html" class="btn btn--ghost">Understand the problem</a>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="section why-now">
-  <div class="section-inner">
-    <div class="section-label">02 — Why now</div>
-    <h2 class="reveal">The cost of getting ESG communication wrong<br/>is no longer measured in <em>reputation</em>.</h2>
-    <p class="section-lede reveal reveal-delay-1">
-      It is measured in denied export contracts, repriced capital, regulator inquiries, and multi-year brand damage. The regulatory floor has risen everywhere — and the verification burden now sits on the company making the claim.
-    </p>
-
-    <div class="timeline reveal reveal-delay-2">
-      <div class="timeline-item">
-        <div class="timeline-when">FY 2026 — 27<small>India · SEBI</small></div>
-        <div class="timeline-what">
-          <h4>BRSR Core mandate expands to top 1,000 listed companies</h4>
-          <p>Third-party assurance becomes mandatory across 49 KPIs covering emissions, water, waste, workforce, and governance. Every assured number becomes a permanent claim.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-when">In force now<small>EU · Regulators</small></div>
-        <div class="timeline-what">
-          <h4>CBAM scrutiny on Indian exporters</h4>
-          <p>Steel, cement, aluminum, fertilizer, hydrogen, and electricity exporters facing EU buyer requirements for verified emissions data and credible decarbonization narrative. Communication failure = lost contract.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-when">2026 — 2027<small>EU · UK · India</small></div>
-        <div class="timeline-what">
-          <h4>Green Claims Directive and equivalent rules tighten</h4>
-          <p>Every environmental claim must be substantiated against an evidence base — or removed. ASCI in India, the FTC in the US, and the EU Commission are converging on the same standard.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-when">Already active<small>ISSB · 40+ jurisdictions</small></div>
-        <div class="timeline-what">
-          <h4>IFRS S1/S2 climate disclosure adoption</h4>
-          <p>From UK, Australia, Japan, and Singapore through to GCC and Brazil — climate-related financial disclosures are now jurisdictional law, not voluntary practice. Investor questions are getting sharper.</p>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-when">Rising globally<small>Courts · Markets</small></div>
-        <div class="timeline-what">
-          <h4>Greenwashing litigation and greenhushing risk</h4>
-          <p>Companies that overclaim get sued. Companies that say nothing lose investor coverage and procurement credibility. The middle path requires intelligence, not instinct.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section positioning">
-  <div class="section-inner">
-    <div class="section-label">03 — Our insight</div>
-    <h2 class="reveal">Three signals exist today.<br/>No one has <em>integrated</em> them.</h2>
-    <p class="section-lede reveal reveal-delay-1">
-      Reporting software handles the data. Reputation intelligence handles the outside view. PR tools handle generic media. None of them speak to each other. None of them understand ESG communication as a coherent discipline. PRXESG sits in the seam — and the integration is the product.
-    </p>
-
-    <div class="positioning-diagram reveal reveal-delay-2">
-      <svg viewBox="0 0 880 440" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+    <!-- animated intelligence loop -->
+    <div class="core fade fade--scale" aria-hidden="true">
+      <svg viewBox="0 0 480 480" role="img">
         <defs>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#322D26" stroke-width="0.5" />
-          </pattern>
+          <radialGradient id="coreGrad" cx="50%" cy="42%" r="60%">
+            <stop offset="0%" stop-color="#e9cf95"/>
+            <stop offset="42%" stop-color="#b0863c"/>
+            <stop offset="100%" stop-color="#141311"/>
+          </radialGradient>
+          <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c9a458" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#c9a458" stop-opacity="0"/>
+          </linearGradient>
         </defs>
-        <rect width="880" height="440" fill="url(#grid)" />
 
-        <circle cx="270" cy="200" r="150" fill="rgba(122, 36, 36, 0.18)" stroke="#7A2424" stroke-width="1" />
-        <circle cx="610" cy="200" r="150" fill="rgba(184, 146, 76, 0.18)" stroke="#B8924C" stroke-width="1" />
-        <circle cx="440" cy="320" r="150" fill="rgba(122, 36, 36, 0.12)" stroke="#A23838" stroke-width="1" stroke-dasharray="4 3" />
+        <!-- rotating dashed rings -->
+        <circle class="spin-slow" cx="240" cy="240" r="196" fill="none" stroke="#e7e5e0" stroke-width="1.5" stroke-dasharray="3 9"/>
+        <circle class="spin-rev" cx="240" cy="240" r="150" fill="none" stroke="#c9a458" stroke-width="1.4" stroke-dasharray="2 10" opacity=".55"/>
+        <circle cx="240" cy="240" r="112" fill="none" stroke="#e7e5e0" stroke-width="1"/>
 
-        <text x="180" y="160" font-family="Geist, sans-serif" font-size="13" fill="#E89393" letter-spacing="0.05em" text-anchor="middle">YOU</text>
-        <text x="180" y="178" font-family="Fraunces, serif" font-size="15" fill="#F4EFE6" text-anchor="middle">Your claims</text>
-        <text x="180" y="196" font-family="Fraunces, serif" font-size="15" fill="#F4EFE6" text-anchor="middle">library</text>
+        <!-- scan sweep -->
+        <g class="spin-scan">
+          <path d="M240 240 L240 44 A196 196 0 0 1 338 70 Z" fill="url(#scanGrad)"/>
+        </g>
 
-        <text x="700" y="160" font-family="Geist, sans-serif" font-size="13" fill="#D4AC68" letter-spacing="0.05em" text-anchor="middle">PEERS</text>
-        <text x="700" y="178" font-family="Fraunces, serif" font-size="15" fill="#F4EFE6" text-anchor="middle">Sector</text>
-        <text x="700" y="196" font-family="Fraunces, serif" font-size="15" fill="#F4EFE6" text-anchor="middle">narratives</text>
+        <!-- connector lines -->
+        <g stroke="#d9cba7" stroke-width="1" opacity=".5">
+          <line x1="240" y1="44"   x2="240"   y2="182"/>
+          <line x1="409.7" y1="142" x2="290.2" y2="211"/>
+          <line x1="409.7" y1="338" x2="290.2" y2="269"/>
+          <line x1="240" y1="436"  x2="240"   y2="298"/>
+          <line x1="70.3" y1="338" x2="189.8" y2="269"/>
+          <line x1="70.3" y1="142" x2="189.8" y2="211"/>
+        </g>
 
-        <text x="440" y="400" font-family="Geist, sans-serif" font-size="13" fill="#E89393" letter-spacing="0.05em" text-anchor="middle">EXTERNAL</text>
-        <text x="440" y="418" font-family="Fraunces, serif" font-size="15" fill="#F4EFE6" text-anchor="middle">Media · NGOs · Regulators</text>
+        <!-- inflowing signal dots -->
+        <g fill="#b0863c">
+          <circle r="4"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0s"   path="M240 44 L240 182"/></circle>
+          <circle r="4"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.4s" path="M409.7 142 L290.2 211"/></circle>
+          <circle r="4" fill="#c0453a"><animateMotion dur="2.6s" repeatCount="indefinite" begin="0.8s" path="M409.7 338 L290.2 269"/></circle>
+          <circle r="4"><animateMotion dur="2.6s" repeatCount="indefinite" begin="1.2s" path="M240 436 L240 298"/></circle>
+          <circle r="4"><animateMotion dur="2.6s" repeatCount="indefinite" begin="1.6s" path="M70.3 338 L189.8 269"/></circle>
+          <circle r="4"><animateMotion dur="2.6s" repeatCount="indefinite" begin="2.0s" path="M70.3 142 L189.8 211"/></circle>
+        </g>
 
-        <rect x="370" y="200" width="140" height="64" fill="#0E0D0A" stroke="#D4AC68" stroke-width="1.5" />
-        <text x="440" y="226" font-family="JetBrains Mono, monospace" font-size="10" fill="#D4AC68" letter-spacing="0.2em" text-anchor="middle">PRXESG</text>
-        <text x="440" y="248" font-family="Fraunces, serif" font-size="13" fill="#F4EFE6" font-style="italic" text-anchor="middle">the integrated view</text>
+        <!-- core pulses -->
+        <circle class="core__pulse"    cx="240" cy="240" r="58" fill="none" stroke="#b0863c" stroke-width="1.5"/>
+        <circle class="core__pulse d2" cx="240" cy="240" r="58" fill="none" stroke="#b0863c" stroke-width="1.5"/>
+        <circle class="core__pulse d3" cx="240" cy="240" r="58" fill="none" stroke="#c0453a" stroke-width="1.5"/>
+
+        <!-- core disc -->
+        <circle cx="240" cy="240" r="58" fill="url(#coreGrad)"/>
+        <g stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M223 232 a18 18 0 1 1 -3 15"/>
+          <path d="M220 233 l3 -6 6 3"/>
+        </g>
+
+        <!-- source chips -->
+        <g class="core__node">
+          <rect class="core__chip-bg" x="205" y="30" width="70" height="24" rx="12"/>
+          <text class="core__chip" x="240" y="46" text-anchor="middle">Filings</text>
+        </g>
+        <g class="core__node">
+          <rect class="core__chip-bg" x="372" y="130" width="66" height="24" rx="12"/>
+          <text class="core__chip" x="405" y="146" text-anchor="middle">News</text>
+        </g>
+        <g class="core__node">
+          <rect class="core__chip-bg node-alert" x="366" y="326" width="82" height="24" rx="12"/>
+          <text class="core__chip" x="407" y="342" text-anchor="middle" fill="#fff">Satellite</text>
+        </g>
+        <g class="core__node">
+          <rect class="core__chip-bg" x="202" y="424" width="76" height="24" rx="12"/>
+          <text class="core__chip" x="240" y="440" text-anchor="middle">Customs</text>
+        </g>
+        <g class="core__node">
+          <rect class="core__chip-bg" x="38" y="326" width="64" height="24" rx="12"/>
+          <text class="core__chip" x="70" y="342" text-anchor="middle">NGO</text>
+        </g>
+        <g class="core__node">
+          <rect class="core__chip-bg" x="36" y="130" width="70" height="24" rx="12"/>
+          <text class="core__chip" x="71" y="146" text-anchor="middle">Social</text>
+        </g>
       </svg>
     </div>
   </div>
-</section>
+</header>
 
-<section class="platform" id="platform">
-  <div class="section-inner">
-    <div class="section-label" style="color: var(--mist);">04 — The platform</div>
-    <h2 class="reveal" style="color: var(--ink);">A three-layer intelligence platform.<br/>One <em>workflow</em>.</h2>
-    <p class="section-lede reveal reveal-delay-1" style="color: var(--char);">
-      Built specifically for sustainability, communication, and investor relations leaders at listed companies, exporters, and climate-focused firms across India and Asia.
-    </p>
+<!-- SIGNAL TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span class="ticker__item"><i></i>Regulatory filings</span>
+    <span class="ticker__item"><i></i>NGO reports</span>
+    <span class="ticker__item"><i></i>Satellite &amp; methane data</span>
+    <span class="ticker__item"><i></i>Customs records</span>
+    <span class="ticker__item"><i></i>News &amp; media</span>
+    <span class="ticker__item"><i></i>Earnings calls</span>
+    <span class="ticker__item"><i></i>Social signals</span>
+    <span class="ticker__item"><i></i>Litigation dockets</span>
+    <span class="ticker__item"><i></i>Peer disclosures</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker__item"><i></i>Regulatory filings</span>
+    <span class="ticker__item"><i></i>NGO reports</span>
+    <span class="ticker__item"><i></i>Satellite &amp; methane data</span>
+    <span class="ticker__item"><i></i>Customs records</span>
+    <span class="ticker__item"><i></i>News &amp; media</span>
+    <span class="ticker__item"><i></i>Earnings calls</span>
+    <span class="ticker__item"><i></i>Social signals</span>
+    <span class="ticker__item"><i></i>Litigation dockets</span>
+    <span class="ticker__item"><i></i>Peer disclosures</span>
+  </div>
+</div>
 
-    <div class="platform-layers reveal reveal-delay-2">
+<!-- ONE LINE STORY: Problem -> Solution -> Impact -->
+<section class="section section--soft">
+  <div class="wrap center">
+    <div class="shead">
+      <span class="eyebrow eyebrow--muted">The whole story, in three steps</span>
+      <h2>One risk surface. One system watching it.</h2>
+    </div>
+    <div class="grid grid-3 stagger" style="text-align:left">
 
-      <div class="platform-layer">
-        <div>
-          <div class="layer-tag"><span class="layer-num">A</span>Claims intelligence</div>
-          <h3>Track every claim<br/>your company has <em>ever made</em>.</h3>
-          <p class="lede">Most companies have no single source of truth for what they have publicly said about sustainability. PRXESG builds a living, searchable, audit-ready claims library — across every channel you publish through.</p>
-          <ul class="feature-list">
-            <li>Continuous ingestion of disclosures, website, press, social, and exec communication</li>
-            <li>Every claim mapped to its underlying KPI and reporting framework</li>
-            <li>Risk-language flagging against EU Green Claims Directive, ASCI, FTC Green Guides</li>
-            <li>Claim evolution tracking — where your narrative has drifted, hardened, or softened</li>
-            <li>Audit-ready substantiation packs generated on demand</li>
-          </ul>
+      <a href="problem.html" class="card card--link fade">
+        <div class="ico ico--red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
         </div>
-        <div class="layer-visual">
-          <div class="mock">
-            <div class="mock-head">
-              <div class="mock-dots">
-                <div class="mock-dot" style="background: #E89393;"></div>
-                <div class="mock-dot" style="background: #D4AC68;"></div>
-                <div class="mock-dot" style="background: #5DCAA5;"></div>
-              </div>
-              <div class="mock-title">Claims library · last 90 days</div>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-risk">Risk</span>
-              <div>
-                <div class="mock-claim">"Net zero by 2030 across all operations"</div>
-                <div class="mock-meta">CEO LinkedIn · 12 Mar · contradicts BRSR target 2050</div>
-              </div>
-              <span class="mock-pct">High</span>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-warn">Warn</span>
-              <div>
-                <div class="mock-claim">"50% emissions cut achieved"</div>
-                <div class="mock-meta">Investor deck Q3 · scope 1+2 only, not stated</div>
-              </div>
-              <span class="mock-pct">Med</span>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-ok">Verified</span>
-              <div>
-                <div class="mock-claim">"100% renewable power at HQ campus"</div>
-                <div class="mock-meta">Press release · matches grid PPA disclosure</div>
-              </div>
-              <span class="mock-pct">Low</span>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-warn">Warn</span>
-              <div>
-                <div class="mock-claim">"Carbon neutral supply chain"</div>
-                <div class="mock-meta">Website footer · no scope 3 disclosure backs this</div>
-              </div>
-              <span class="mock-pct">High</span>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-ok">Verified</span>
-              <div>
-                <div class="mock-claim">"ISO 14001 certified at 4 facilities"</div>
-                <div class="mock-meta">Annual report p.84 · certificate on file</div>
-              </div>
-              <span class="mock-pct">Low</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        <span class="eyebrow eyebrow--red">Problem</span>
+        <h3>The data exists. The intelligence doesn't.</h3>
+        <p>ESG signals are scattered across filings, news, satellites and customs data. Response takes weeks — the crisis hits in hours.</p>
+      </a>
 
-      <div class="platform-layer">
-        <div>
-          <div class="layer-tag"><span class="layer-num">B</span>Peer benchmark</div>
-          <h3>See your competitive<br/>narrative landscape <em>in real time</em>.</h3>
-          <p class="lede">Continuous narrative tracking across your sector. Positive and negative comparisons across themes, frameworks, KPIs, and time. Stop discovering peer repositioning six months late.</p>
-          <ul class="feature-list">
-            <li>Sector-specific peer sets with continuous narrative monitoring</li>
-            <li>Theme and KPI-level benchmarking — who claims what, with what evidence</li>
-            <li>White-space mapping — where peers are silent and you can lead credibly</li>
-            <li>Risk mapping — where peers are over-claiming and could drag the sector</li>
-            <li>Quarterly trend reports on narrative shifts in your industry</li>
-          </ul>
+      <a href="solution.html" class="card card--link fade">
+        <div class="ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2zM9 21h6M10 17v4M14 17v4"/></svg>
         </div>
-        <div class="layer-visual">
-          <div class="mock">
-            <div class="mock-head">
-              <div class="mock-dots">
-                <div class="mock-dot" style="background: #E89393;"></div>
-                <div class="mock-dot" style="background: #D4AC68;"></div>
-                <div class="mock-dot" style="background: #5DCAA5;"></div>
-              </div>
-              <div class="mock-title">Peer benchmark · cement sector · India</div>
-            </div>
-            <div style="padding: 12px 0; font-size: 10px; color: #7A746A; letter-spacing: 0.1em; text-transform: uppercase;">Claim density · last 12 months</div>
-            <div class="mock-bars">
-              <div class="mock-bar low" style="height: 30%;"></div>
-              <div class="mock-bar mid" style="height: 55%;"></div>
-              <div class="mock-bar high" style="height: 80%;"></div>
-              <div class="mock-bar mid" style="height: 50%;"></div>
-              <div class="mock-bar low" style="height: 20%;"></div>
-              <div class="mock-bar high" style="height: 90%;"></div>
-              <div class="mock-bar mid" style="height: 60%;"></div>
-              <div class="mock-bar low" style="height: 35%;"></div>
-              <div class="mock-bar mid" style="height: 65%;"></div>
-              <div class="mock-bar low" style="height: 25%;"></div>
-            </div>
-            <div class="mock-axis">
-              <span>You</span><span>P1</span><span>P2</span><span>P3</span><span>P4</span><span>P5</span><span>P6</span><span>P7</span><span>P8</span><span>P9</span>
-            </div>
-            <div style="margin-top: 20px;">
-              <div class="mock-row">
-                <span class="mock-tag tag-warn">Gap</span>
-                <div>
-                  <div class="mock-claim">Scope 3 supply chain commitments</div>
-                  <div class="mock-meta">6 of 10 peers disclose · you do not</div>
-                </div>
-                <span class="mock-pct">−40%</span>
-              </div>
-              <div class="mock-row">
-                <span class="mock-tag tag-ok">Lead</span>
-                <div>
-                  <div class="mock-claim">Water positive operations narrative</div>
-                  <div class="mock-meta">1 of 10 peers · you are sector-first</div>
-                </div>
-                <span class="mock-pct">+95%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <span class="eyebrow">Solution</span>
+        <h3>We compress the loop to minutes.</h3>
+        <p>AI ingests every public ESG signal, reconciles it against a company's own claims, scores the risk, and drafts the response.</p>
+      </a>
 
-      <div class="platform-layer">
-        <div>
-          <div class="layer-tag"><span class="layer-num">C</span>Reputation signal</div>
-          <h3>External coverage, <em>verified</em><br/>before it reaches your team.</h3>
-          <p class="lede">News, NGO reports, regulator statements, social platforms, trade press. Multi-source, multi-language, materiality-tagged, and human-verified. No automated single-source alerts about your company or peers.</p>
-          <ul class="feature-list">
-            <li>Multi-source, multi-language ESG coverage tracking</li>
-            <li>Materiality-tagged signal — only what matters to your sector and stakeholders</li>
-            <li>Verified alerts with editorial review on every flagged controversy</li>
-            <li>Sentiment trajectory — how your reputation is moving, not just where it is</li>
-            <li>Cross-reference engine — when external coverage contradicts your claims</li>
-          </ul>
+      <a href="impact.html" class="card card--link fade">
+        <div class="ico ico--ink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
         </div>
-        <div class="layer-visual">
-          <div class="mock">
-            <div class="mock-head">
-              <div class="mock-dots">
-                <div class="mock-dot" style="background: #E89393;"></div>
-                <div class="mock-dot" style="background: #D4AC68;"></div>
-                <div class="mock-dot" style="background: #5DCAA5;"></div>
-              </div>
-              <div class="mock-title">Reputation signal · last 7 days</div>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-risk">Alert</span>
-              <div>
-                <div class="mock-claim">EU buyer-side concern · CBAM data quality</div>
-                <div class="mock-meta">Reuters · 2 trade publications · verified by analyst</div>
-              </div>
-              <span class="mock-pct">High</span>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-warn">Watch</span>
-              <div>
-                <div class="mock-claim">NGO scoring update · climate transition plan</div>
-                <div class="mock-meta">CDP · published Tuesday · score down 1 band</div>
-              </div>
-              <span class="mock-pct">Med</span>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-flat">Note</span>
-              <div>
-                <div class="mock-claim">Analyst report references emissions trajectory</div>
-                <div class="mock-meta">Sell-side note · neutral framing · 4 buyers cited</div>
-              </div>
-              <span class="mock-pct">Info</span>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-risk">Alert</span>
-              <div>
-                <div class="mock-claim">Social discussion · supplier audit footage</div>
-                <div class="mock-meta">LinkedIn + Reddit · 14k impressions · unverified</div>
-              </div>
-              <span class="mock-pct">High</span>
-            </div>
-            <div class="mock-row">
-              <span class="mock-tag tag-ok">Resolved</span>
-              <div>
-                <div class="mock-claim">Activist post on water disclosure</div>
-                <div class="mock-meta">Verified as factually incorrect · correction filed</div>
-              </div>
-              <span class="mock-pct">Low</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        <span class="eyebrow eyebrow--muted">Impact</span>
+        <h3>Weeks → minutes. Crisis → caught early.</h3>
+        <p>Risk surfaced before it reaches the press, a defensible ESG narrative, and one system across the whole enterprise.</p>
+      </a>
 
     </div>
   </div>
 </section>
 
-<section class="loop">
-  <div class="section-inner">
-    <div class="section-label">05 — Integration</div>
-    <h2 class="reveal">When the three signals contradict,<br/>we surface it <em>before stakeholders do</em>.</h2>
+<!-- WHAT IT IS: simple visual -->
+<section class="section">
+  <div class="wrap">
+    <div class="shead">
+      <span class="eyebrow">What PR×ESG is</span>
+      <h2>A live intelligence layer for ESG risk.</h2>
+      <p class="lead" style="margin-top:14px">We don't write our customers' compliance filings. We make whatever they file — and say — defensible: reconciled against evidence, benchmarked against peers, and monitored in real time.</p>
+    </div>
 
-    <div class="loop-grid">
-      <div class="loop-text reveal reveal-delay-1">
-        <h3>The reason most companies fail at ESG communication is not lack of effort.</h3>
-        <p>It is that the data lives in three silos: their own reporting team, their PR agency's media monitoring, and a research analyst's quarterly peer scan. By the time these three views meet — usually in a crisis — it is too late.</p>
-        <p>PRXESG closes the loop. When your stated claim contradicts your peer's stated claim, when external coverage flags a gap in your disclosure, when a regulator statement changes what you can safely say next quarter — the platform surfaces the connection in one workflow.</p>
-        <p class="pull">This is the product. The integration is the moat.</p>
+    <div class="grid grid-4 stagger">
+      <div class="card fade">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+        <h3>Ingest</h3>
+        <p>Every public ESG signal — filings, news, social, NGO, satellite, customs.</p>
       </div>
-
-      <div class="reveal reveal-delay-2">
-        <svg viewBox="0 0 440 440" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#322D26" stroke-width="0.5" />
-            </pattern>
-            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#D4AC68" />
-            </marker>
-          </defs>
-          <rect width="440" height="440" fill="url(#grid2)" />
-
-          <rect x="40" y="40" width="160" height="80" fill="#1C1A16" stroke="#7A2424" stroke-width="1" />
-          <text x="56" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#E89393" letter-spacing="0.15em">A · YOU</text>
-          <text x="56" y="92" font-family="Fraunces, serif" font-size="14" fill="#F4EFE6">Claims library</text>
-          <text x="56" y="110" font-family="Geist, sans-serif" font-size="11" fill="#B5AFA1">200+ public claims</text>
-
-          <rect x="240" y="40" width="160" height="80" fill="#1C1A16" stroke="#B8924C" stroke-width="1" />
-          <text x="256" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#D4AC68" letter-spacing="0.15em">B · PEERS</text>
-          <text x="256" y="92" font-family="Fraunces, serif" font-size="14" fill="#F4EFE6">Peer benchmark</text>
-          <text x="256" y="110" font-family="Geist, sans-serif" font-size="11" fill="#B5AFA1">10–30 peer feeds</text>
-
-          <rect x="140" y="180" width="160" height="80" fill="#1C1A16" stroke="#A23838" stroke-width="1" stroke-dasharray="3 2" />
-          <text x="156" y="205" font-family="JetBrains Mono, monospace" font-size="10" fill="#E89393" letter-spacing="0.15em">C · EXTERNAL</text>
-          <text x="156" y="232" font-family="Fraunces, serif" font-size="14" fill="#F4EFE6">Reputation signal</text>
-          <text x="156" y="250" font-family="Geist, sans-serif" font-size="11" fill="#B5AFA1">News · NGO · social</text>
-
-          <rect x="100" y="330" width="240" height="74" fill="#0E0D0A" stroke="#D4AC68" stroke-width="2" />
-          <text x="220" y="358" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AC68" letter-spacing="0.18em" text-anchor="middle">INTEGRATED VIEW</text>
-          <text x="220" y="382" font-family="Fraunces, serif" font-size="14" fill="#F4EFE6" font-style="italic" text-anchor="middle">Contradiction surfaced</text>
-          <text x="220" y="398" font-family="Geist, sans-serif" font-size="11" fill="#B5AFA1" text-anchor="middle">before stakeholders see it</text>
-
-          <line x1="120" y1="120" x2="170" y2="180" stroke="#D4AC68" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#arr)" />
-          <line x1="320" y1="120" x2="270" y2="180" stroke="#D4AC68" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#arr)" />
-          <line x1="220" y1="260" x2="220" y2="325" stroke="#D4AC68" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#arr)" />
-        </svg>
+      <div class="card fade">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></div>
+        <h3>Reconcile</h3>
+        <p>Claims linked in a knowledge graph — contradictions surface automatically.</p>
+      </div>
+      <div class="card fade">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/><path d="M9 21h6"/></svg></div>
+        <h3>Score</h3>
+        <p>Risk, sentiment and predictive models rank what matters — with evidence.</p>
+      </div>
+      <div class="card fade">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div>
+        <h3>Act</h3>
+        <p>Briefs and responses pre-drafted for one-click human approval.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="services" id="services">
-  <div class="section-inner">
-    <div class="section-label">06 — Services</div>
-    <h2 class="reveal" style="color: var(--ink);">The platform shows you the gaps.<br/>Our team helps you <em>close them</em>.</h2>
-    <p class="section-lede reveal reveal-delay-1" style="color: var(--char);">
-      Most agencies offering sustainability communication today are PR firms that added an ESG capability. They lack technical fluency in frameworks, climate finance, and the regulatory landscape that defines what companies can credibly say. PRXESG is the opposite — built by people whose foundation is in carbon markets, climate finance, and sustainability strategy, with communication craft layered on top.
-    </p>
-
-    <div class="services-grid reveal reveal-delay-2">
-
-      <div class="service-card">
-        <div class="num">S 01</div>
-        <h4>ESG narrative audit</h4>
-        <p>A 4–6 week diagnostic that maps your current sustainability communication across every channel, identifies inconsistencies and risk exposure, and delivers a prioritized roadmap. The fastest way to know where you stand.</p>
-        <div class="price">From <span>₹8 lakh</span></div>
-      </div>
-
-      <div class="service-card">
-        <div class="num">S 02</div>
-        <h4>Annual sustainability communication</h4>
-        <p>End-to-end communication architecture for your reporting cycle. Sustainability report, investor communication, stakeholder narrative, internal rollout — built around your BRSR Core, CSRD, or IFRS S1/S2 disclosures.</p>
-        <div class="price">Engagement <span>₹25–80 lakh</span></div>
-      </div>
-
-      <div class="service-card">
-        <div class="num">S 03</div>
-        <h4>CBAM &amp; export communication</h4>
-        <p>Specialist communication strategy for Indian exporters facing EU buyer scrutiny under CBAM and supply-chain ESG requirements. Built for steel, cement, fertilizers, aluminum, chemicals, and hydrogen.</p>
-        <div class="price">From <span>₹15 lakh</span></div>
-      </div>
-
-      <div class="service-card">
-        <div class="num">S 04</div>
-        <h4>Carbon market narrative</h4>
-        <p>For carbon project developers, climate-tech firms, and carbon market intermediaries navigating integrity scrutiny. Built by team members with direct carbon markets and climate finance experience — not generalists.</p>
-        <div class="price">From <span>₹12 lakh</span></div>
-      </div>
-
-      <div class="service-card">
-        <div class="num">S 05</div>
-        <h4>ESG crisis communication</h4>
-        <p>Rapid response for greenwashing allegations, NGO campaigns, regulator inquiries, and ratings downgrades. Retainer-based capacity, with platform monitoring built in across the engagement.</p>
-        <div class="price">Retainer <span>₹3–10 lakh / month</span></div>
-      </div>
-
-      <div class="service-card">
-        <div class="num">S 06</div>
-        <h4>Investor &amp; IR ESG communication</h4>
-        <p>Investor-facing sustainability narrative, ESG sections of investor presentations, rating agency response strategy, and pre-emptive answers for the ESG questions you know are coming on the next call.</p>
-        <div class="price">From <span>₹10 lakh</span></div>
-      </div>
-
+<!-- METRIC STRIP -->
+<section class="section section--tint">
+  <div class="wrap">
+    <div class="grid grid-4 stagger center">
+      <div class="card fade center"><div class="stat"><div class="stat__n stat__n--gold">Minutes</div><div class="stat__l">Risk response, down from 2–4 weeks</div></div></div>
+      <div class="card fade center"><div class="stat"><div class="stat__n" data-count="24" data-suffix="×7">24×7</div><div class="stat__l">Continuous monitoring of every public signal</div></div></div>
+      <div class="card fade center"><div class="stat"><div class="stat__n" data-count="6">6</div><div class="stat__l">Risk fronts unified into one surface</div></div></div>
+      <div class="card fade center"><div class="stat"><div class="stat__n stat__n--gold">0→100</div><div class="stat__l">Live, defensible narrative-health score</div></div></div>
     </div>
   </div>
 </section>
 
-<section class="frameworks" id="frameworks">
-  <div class="section-inner">
-    <div class="section-label">07 — Frameworks</div>
-    <h2 class="reveal">Built around the frameworks<br/>your stakeholders <em>actually care about</em>.</h2>
-    <p class="section-lede reveal reveal-delay-1">
-      Our methodology maps every claim to its underlying framework requirement — so when a regulator, investor, or buyer asks for substantiation, the answer is one click away. Not a project. Not a panic.
-    </p>
-
-    <div class="framework-grid reveal reveal-delay-2">
-      <div class="framework-cell">
-        <div class="code">BRSR / BRSR CORE</div>
-        <div class="name">SEBI India</div>
-        <div class="geo">Top 1,000 listed cos · assurance mandate</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">CSRD / ESRS</div>
-        <div class="name">European Union</div>
-        <div class="geo">Post-Omnibus scope · large undertakings</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">IFRS S1 / S2</div>
-        <div class="name">ISSB</div>
-        <div class="geo">40+ jurisdictions · climate-financial</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">GRI STANDARDS</div>
-        <div class="name">Global Reporting</div>
-        <div class="geo">Universal · sector · topic standards</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">CDP</div>
-        <div class="name">Climate · water · forests</div>
-        <div class="geo">Investor &amp; supply chain disclosure</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">SBTi</div>
-        <div class="name">Science-based targets</div>
-        <div class="geo">Near-term · net-zero · FLAG · financial</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">ECOVADIS</div>
-        <div class="name">Supplier sustainability</div>
-        <div class="geo">EU buyer-side · procurement scoring</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">CBAM</div>
-        <div class="name">EU Carbon Border</div>
-        <div class="geo">Steel · cement · aluminum · fertilizer</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">TCFD</div>
-        <div class="name">Climate-related risk</div>
-        <div class="geo">Now consolidated into IFRS S2</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">GREEN CLAIMS</div>
-        <div class="name">EU Directive</div>
-        <div class="geo">Substantiation &amp; verification regime</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">ASCI</div>
-        <div class="name">India advertising standards</div>
-        <div class="geo">Environmental &amp; greenwashing guidelines</div>
-      </div>
-      <div class="framework-cell">
-        <div class="code">UN PRI / SDG</div>
-        <div class="name">Investor &amp; impact</div>
-        <div class="geo">Reporting · alignment narratives</div>
+<!-- CTA -->
+<section class="section">
+  <div class="wrap">
+    <div class="callout fade">
+      <span class="eyebrow" style="color:var(--gold-soft)">The window is now</span>
+      <h2>Regulation is live. The stakes are priced.<br>The technology is finally here.</h2>
+      <p>See how PR×ESG turns a scattered risk surface into a single, defensible view.</p>
+      <div class="btn-row" style="justify-content:center">
+        <a href="solution.html" class="btn btn--primary">Explore the solution
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="industries" id="industries">
-  <div class="section-inner">
-    <div class="section-label">08 — Industries</div>
-    <h2 class="reveal">Built for the segments where<br/>ESG communication is a <em>painkiller</em>.</h2>
-    <p class="section-lede reveal reveal-delay-1">
-      We do not serve everyone. We serve the verticals where the cost of getting ESG communication wrong is large, immediate, and directly tied to revenue, capital, or licence-to-operate.
-    </p>
-
-    <div class="industry-grid">
-
-      <div class="industry-card reveal reveal-delay-2">
-        <div class="tag">Manufacturing · Exporters</div>
-        <h4>CBAM-exposed Indian exporters facing EU buyer scrutiny.</h4>
-        <p>Steel, cement, aluminum, fertilizers, chemicals, and hydrogen exporters whose buyer questionnaires now run 60+ ESG questions per RFP. Communication failure means a lost contract — not a brand impact.</p>
-        <div class="industry-stat">
-          <span class="n">3,500+</span>
-          <span class="l">Indian companies with CBAM-relevant EU exposure</span>
-        </div>
-      </div>
-
-      <div class="industry-card reveal reveal-delay-2">
-        <div class="tag">Listed companies</div>
-        <h4>Top 1,000 listed companies under BRSR Core assurance.</h4>
-        <p>SEBI's BRSR Core mandate expanding to all 1,000 listed companies by FY 2026–27, with third-party assurance. Every assured number becomes a permanent public claim — and every claim becomes an investor question.</p>
-        <div class="industry-stat">
-          <span class="n">1,000</span>
-          <span class="l">listed companies in scope · FY 2026–27</span>
-        </div>
-      </div>
-
-      <div class="industry-card reveal reveal-delay-3">
-        <div class="tag">Carbon markets · Climate-tech</div>
-        <h4>Project developers and climate-tech firms under integrity pressure.</h4>
-        <p>Post-Verra reckoning, carbon project developers and methodology providers face buyer scrutiny that did not exist three years ago. Climate-tech firms communicating impact to investors need credible quantification, not optimism.</p>
-        <div class="industry-stat">
-          <span class="n">~2,000</span>
-          <span class="l">carbon &amp; climate-tech firms globally</span>
-        </div>
-      </div>
-
-      <div class="industry-card reveal reveal-delay-3">
-        <div class="tag">PE · VC portfolios</div>
-        <h4>Portfolio companies preparing for ESG-conscious capital cycles.</h4>
-        <p>Sponsor-backed companies preparing for next funding round, secondary, or exit. ESG narrative now sits inside the investment memo. Portfolio-level support across multiple companies in one engagement.</p>
-        <div class="industry-stat">
-          <span class="n">12–40</span>
-          <span class="l">portfolio cos per fund · structured engagement</span>
-        </div>
-      </div>
-
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <a href="index.html" class="brand">PR<span class="x">×</span>ESG</a>
+    <div class="footer__links">
+      <a href="index.html">Home</a>
+      <a href="problem.html">Problem</a>
+      <a href="solution.html">Solution</a>
+      <a href="impact.html">Impact</a>
     </div>
-  </div>
-</section>
-
-<section class="insights" id="insights">
-  <div class="section-inner">
-    <div class="section-label">09 — Insights</div>
-    <h2 class="reveal" style="color: var(--ink);">The PRXESG Brief.</h2>
-    <p class="section-lede reveal reveal-delay-1" style="color: var(--char);">
-      A weekly intelligence dispatch on ESG communication in India and Asia. Original analysis. Framework updates. Peer narrative shifts. Claim-risk advisories. No fluff. Read by sustainability leaders, communication heads, IR teams, and ESG investors across listed companies, climate funds, and export-focused manufacturers.
-    </p>
-
-    <div class="insights-grid">
-      <div>
-        <ul class="insights-list reveal reveal-delay-2">
-          <li>
-            <div class="date">Issue 12<br/>Mar 2026</div>
-            <div class="ttl">The quiet rewrite — how 12 Indian listed companies have softened their Net Zero language in the last 6 months</div>
-          </li>
-          <li>
-            <div class="date">Issue 11<br/>Feb 2026</div>
-            <div class="ttl">CBAM communication — what EU buyers are actually asking Indian suppliers, and what most are answering wrong</div>
-          </li>
-          <li>
-            <div class="date">Issue 10<br/>Feb 2026</div>
-            <div class="ttl">The greenhushing trap — why saying less is not actually safer under the Green Claims Directive</div>
-          </li>
-          <li>
-            <div class="date">Issue 09<br/>Jan 2026</div>
-            <div class="ttl">BRSR Core assurance year one — five claim-risk patterns across the first 150 assured reports</div>
-          </li>
-          <li>
-            <div class="date">Issue 08<br/>Jan 2026</div>
-            <div class="ttl">The Scope 3 silence — sectors where peer disclosure has now overtaken sector leaders</div>
-          </li>
-          <li>
-            <div class="date">Issue 07<br/>Dec 2025</div>
-            <div class="ttl">Carbon market narrative after the Verra reckoning — what credible project communication looks like in 2026</div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="subscribe-card reveal reveal-delay-3">
-        <h4>Subscribe to the brief.</h4>
-        <p>Free. Weekly. Sent Tuesday at 7am IST. Unsubscribe in one click. We never share your address.</p>
-        <form class="sub-form" onsubmit="event.preventDefault(); alert('Thanks — we will be in touch shortly.');">
-          <input type="text" placeholder="Full name" required />
-          <input type="text" placeholder="Company" required />
-          <input type="email" placeholder="Work email" required />
-          <button type="submit">Subscribe</button>
-        </form>
-        <div class="sub-meta">No spam · Real intelligence · Unsubscribe anytime</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="about" id="about">
-  <div class="section-inner">
-    <div class="section-label">10 — About</div>
-    <h2 class="reveal">Built to close the gap<br/>between sustainability action<br/>and sustainability <em>credibility</em>.</h2>
-
-    <div class="about-grid">
-      <div class="about-text reveal reveal-delay-1">
-        <p>We saw the same pattern repeating across Indian and Asian companies: real climate work, real ESG progress, real capital deployed — and communication that either undersold the substance or overclaimed in ways that quietly created risk. Most companies were either invisible or vulnerable.</p>
-        <p>Neither of those is acceptable when the cost of getting ESG communication wrong is now measured in lost export contracts, denied investor capital, regulator inquiries, and brand damage that takes years to repair.</p>
-        <p>PRXESG exists to be the intelligence layer <strong>and</strong> the expert team that companies turn to when ESG communication has to be both substantive and safe. Our foundation is in carbon markets, climate finance, sustainability strategy, and decarbonization — not generalist PR.</p>
-        <p>We are based in India, building for the segments that face the sharpest version of this problem: BRSR-mandated listed companies, CBAM-exposed exporters, and the carbon markets and climate-tech ecosystem where credibility is everything.</p>
-      </div>
-
-      <div class="reveal reveal-delay-2">
-        <ul class="principle-list">
-          <li>
-            <div class="n">01</div>
-            <div>
-              <h5>Substance before spin.</h5>
-              <p>We do not help clients say things their data cannot support. The platform is built to make that approach scalable, not to dress up gaps.</p>
-            </div>
-          </li>
-          <li>
-            <div class="n">02</div>
-            <div>
-              <h5>Specialist, not generalist.</h5>
-              <p>Sustainability communication done by people who understand Scope 3 Category 11, the difference between BRSR Core and full BRSR, and what CBAM verification actually requires.</p>
-            </div>
-          </li>
-          <li>
-            <div class="n">03</div>
-            <div>
-              <h5>Platform-backed services.</h5>
-              <p>Every services engagement runs on our platform. Every platform feature is informed by real client work. Services without platform is craft without scale; platform without services is software without judgment.</p>
-            </div>
-          </li>
-          <li>
-            <div class="n">04</div>
-            <div>
-              <h5>India and Asia first.</h5>
-              <p>Built for the regulatory landscape, business culture, and stakeholder expectations of this region. Not a Western template adapted late.</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-section" id="demo">
-  <div class="cta-inner">
-    <div class="eyebrow"><span class="pulse"></span>Book a working session</div>
-    <h2>See how PRXESG maps<br/>your ESG <em>communication landscape</em>.</h2>
-    <p>A 30-minute walkthrough. We will show you the platform, ask about your current communication challenges, and — if it is a fit — share a sample analysis of your company's recent ESG communication and peer landscape.<br/><br/>No sales pressure. Real intelligence. If we are not the right partner for you, we will tell you.</p>
-    <div class="actions">
-      <a href="mailto:hello@prxesg.com" class="cta-btn primary">Book a 30-minute demo</a>
-      <a href="#insights" class="cta-btn ghost">Subscribe to the Brief →</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="#top" class="logo">prx<span class="x">×</span>esg<span class="esg">intelligence</span></a>
-        <p>The ESG communication intelligence platform. Built for the people whose job is to make sure your sustainability story holds up.</p>
-      </div>
-      <div class="footer-col">
-        <h6>Platform</h6>
-        <ul>
-          <li><a href="#platform">Claims intelligence</a></li>
-          <li><a href="#platform">Peer benchmark</a></li>
-          <li><a href="#platform">Reputation signal</a></li>
-          <li><a href="#platform">Integrated view</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h6>Services</h6>
-        <ul>
-          <li><a href="#services">Narrative audit</a></li>
-          <li><a href="#services">Annual communication</a></li>
-          <li><a href="#services">CBAM &amp; exports</a></li>
-          <li><a href="#services">Carbon markets</a></li>
-          <li><a href="#services">Crisis communication</a></li>
-          <li><a href="#services">Investor &amp; IR</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h6>Company</h6>
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#insights">The Brief</a></li>
-          <li><a href="#frameworks">Frameworks</a></li>
-          <li><a href="mailto:hello@prxesg.com">Contact</a></li>
-          <li><a href="mailto:careers@prxesg.com">Careers</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="copy">© 2026 PRXESG · The ESG communication intelligence platform · Built in India</div>
-      <div class="legal">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Editorial standards</a>
-      </div>
-    </div>
+    <div class="footer__meta">ESG Risk &amp; Communication Intelligence · Inside the loop, before the crisis.</div>
   </div>
 </footer>
 
-<script>
-const topbar = document.getElementById('topbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 20) topbar.classList.add('scrolled');
-  else topbar.classList.remove('scrolled');
-});
+<button class="totop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('in');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-</script>
-
+<script src="app.js"></script>
 </body>
 </html>
