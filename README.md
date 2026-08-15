@@ -2,7 +2,7 @@
 
 A static, animated 4-page marketing site. No build step, no dependencies — plain HTML/CSS/JS.
 
-**Live:** https://kishan0088.github.io/prxesg/
+**Live:** https://prxesg.com/ (also served at https://kishan0088.github.io/prxesg/)
 
 ```
 index.html      Home / overview + animated intelligence-loop hero
@@ -20,16 +20,11 @@ sitemap.xml     4 URLs
 
 ## How it's deployed
 
-Repo `Kishan0088/prxesg`, GitHub Pages from `main` / root. Because it's a *project* page it lives at the `/prxesg/` subpath — all links are relative, so it works there without changes.
+Repo `Kishan0088/prxesg`, GitHub Pages from `main` / root, custom domain **prxesg.com** (HTTPS enforced via Let's Encrypt). The `CNAME` file holds the domain; all page links are relative.
+
+DNS at GoDaddy: apex `@` → four A records `185.199.108–111.153`; `www` → CNAME `kishan0088.github.io`. (The GoDaddy "WebsiteBuilder Site" A record must stay deleted — it hijacks the apex and breaks HTTPS.)
 
 To update: edit files and push to `main`; Pages rebuilds in ~1 minute.
-
-## Switching to a custom domain (prxesg.com) later
-
-1. Add a file named `CNAME` (no extension) containing `prxesg.com`.
-2. At your registrar add four `A` records for the apex → `185.199.108.153`, `.109.153`, `.110.153`, `.111.153`, and a `CNAME` for `www` → `kishan0088.github.io`.
-3. **Settings → Pages** → set custom domain to `prxesg.com`, enable **Enforce HTTPS**.
-4. Update the absolute URLs in the `<link rel="canonical">` / OpenGraph tags, `sitemap.xml`, and `robots.txt` from `kishan0088.github.io/prxesg/` to `prxesg.com/`.
 
 ## Notes
 
